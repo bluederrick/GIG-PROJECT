@@ -32,24 +32,17 @@ const signup = async (req, res) => {
         const { Password, Email } = req.body
         const salt = bcrypt.genSaltSync(saltRounds);
         const hashPassword = bcrypt.hashSync(Password, salt);
-
-        console.log(hashPassword),
-            console.log(salt)
-        const Users = new userModel({
-            // Name: req.body.Name,
-            password: req.body.password,
-            Email: req.body.Email,
-            // Password,
-            // Email,
-        });
-        let Saveduser = Users.save().then(function () {
-            response.json(Saveduser)
-        }).catch(function (err) { console.log(err) });
-
-        console.log(Saveduser)
+        const user = new userModel({
+            password: hashPassword,
+            Email: Email,
+        }).save();
+        if(!user){
+            return res.status(422).json({ status: 422, title: "Sign up failed", message: "Oops something went wrong"})
+        }
+       return res.status(200).json({ message: "User account created successfullt" })
     } catch (e) {
-        console.dir(e)
-    } res.status(200).json({ message: "databases saved successfully" })
+        return res.status(500).json({ status: 500, title: "Sign up failed", message: "Oops something went wrong"})
+    } 
 
 }
 
