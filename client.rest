@@ -1,0 +1,14 @@
+POST http://localhost:8000/api/signup/
+
+
+
+Content-Type: application/json
+
+{
+    "Name":"victor ",
+    "Password":"Efvmkf",
+    "Email":"victor4keys@yahoo.com" 
+
+}
+
+
